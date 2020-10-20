@@ -1,0 +1,30 @@
+--
+-- FUNCTION GROUPS
+--
+let
+    send =
+        roomunit 0.3 0.7 0.9
+        .delunit 0.3 (1/8) 0.5
+    func1 =  
+        void
+        .fast (spd)
+        . every 1
+        (
+            (# crush "8 .. <8 1>")
+        )
+        . chop 16
+        . (#shape 0.8)
+        . (# triode "0.3 .. 0.7")
+        -- . autopan
+    func2 =
+        void
+        . chop 1
+        . (#shape 0.8)
+        . (# triode "0.3 .. 0.7")
+    func3 = 
+        void
+        .whenmod 8 0 (
+            void
+            .(# hpf (fast 0.5 $ "50 .. 1" * "100"))
+            .(# hpq 0.2)
+        )

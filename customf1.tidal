@@ -17,8 +17,7 @@ let
     void = fast 1
     num = 8
     swng = (swingBy (4/24) 8) -- the sweet sopt (4/28) or (4/24)
-    center = 
-            always (#pan 0.5)
+    center = always (#pan 0.5)
     delunit a b c =
             (# delay a)
             .(#delaytime b)
@@ -28,3 +27,4 @@ let
             .(# size b)
             .(# dry c)
     autopan = (#pan (autos 0 1))
+    kill = (#gain 0)
