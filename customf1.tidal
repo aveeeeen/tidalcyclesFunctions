@@ -1,0 +1,30 @@
+let
+    autos a b = (range a b $ saw)
+    autor c d = (range c d $ rand)
+    autonotes e f = (range e f rand)
+    cl channel cycles = (clutchIn channel cycles)
+    fd channel cycles = (xfadeIn channel cycles)
+    nt = note
+    rtmvar = choose [2,4,8,16]
+    mov1 = choose [0,7,5,-3]
+    mov2 = "[12]" 
+    mov3 ="0" |+| "<5 4 -3 -3>" 
+    spd = "1"
+    stutInput = 0
+    del a = delay a
+    delT a = delaytime a
+    delF a = delayfeedback a
+    void = fast 1
+    num = 8
+    swng = (swingBy (4/24) 8) -- the sweet sopt (4/28) or (4/24)
+    center = 
+            always (#pan 0.5)
+    delunit a b c =
+            (# delay a)
+            .(#delaytime b)
+            .(#delayfeedback c)
+    roomunit a b c =
+            (# room a)
+            .(# size b)
+            .(# dry c)
+    autopan = (#pan (autos 0 1))
