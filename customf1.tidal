@@ -7,7 +7,7 @@ let
     nt = note
     rtmvar = choose [2,4,8,16]
     mov1 = choose [0,7,5,-3]
-    mov2 = "[12]" 
+    mov2 = "[12]"    
     mov3 ="0" |+| "<5 4 -3 -3>" 
     spd = "1"
     stutInput = 0
@@ -28,3 +28,11 @@ let
             .(# dry c)
     autopan = (#pan (autos 0 1))
     kill = (#gain 0)
+    l a = legato a
+    la a = loopAt a
+    big a b =
+        void
+        -- . chop 1
+        . (#shape a)
+        . (#gain b)
+        . (# triode "0.3 .. 0.7")

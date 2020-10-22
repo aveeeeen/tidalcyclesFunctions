@@ -12,35 +12,42 @@ let
         (
             (# crush "8 .. <8 1>")
         )
-        . chop 16
-        . (#shape 0.8)
-        . (# triode "0.3 .. 0.7")
+        -- . chop 2
+        -- . (#shape 0.8)
+        . (# triode "[0.3 .. 0.7]/2")
         -- . autopan
-    func2 =
+    func2 = 
         void
-        . chop 1
-        . (#shape 0.8)
-        . (# triode "0.3 .. 0.7")
-    func3 = 
-        void
-        .whenmod 8 0 (
+        .stut' 4 (6/16) (
             void
-            .(# hpf (fast 0.5 $ "50 .. 1" * "100"))
-            .(# hpq 0.2)
+            .iter 2
+            .jux ("0.125 <2 0.5>" ~>)
+            .(#speed (choose [-0.5 , 0.5] |*| "1*16"))
         )
-    func =
-            void
-            .func1
-            .func2
-            -- .func3
+        .(# release "[1 .. 0.3]/2")
+    func3 =
+        void
+        .(#crush "8 .. 1")
     masterPitch =
         (|+| nt "-5").
         (|+| nt "[0 [~ 12] 7 0]*2").
         slow 4.
         (|+| nt "<5 9 7 5>")
-    filter = 
+    filter ftype fq rt= 
+            if ftype == "lpf"
+                then (
+                    (#lpf ("[10 .. 1] * 1" * "[10 .. 1] * 1" * "[10 .. 1]" * fq * rt))
+                    . (#lpq 0.2)
+                    . (#l 0.95)
+                )     
+                else (
+                    (#hpf ("[1 .. 10] * 1" * "[1 .. 10] * 1" * "[1 .. 10]" * fq * rt))
+                    . (#hpq 0.2)
+                    . (#l 0.95)
+                )
+    filter2 = 
         every 1 (    
-            (#lpf ("[10 .. 1] * 2" * "[10 .. 1] * 4" * "[10 .. 1]" * "10"))
+            (#lpf ("[10 .. 1] * 4" * "[5 .. 1] * 8" * "[5 .. 1]" * "10"))
             -- (#hpf ("[1 .. 10] * 8" * "[5 .. 10] * 2" * "[1 .. 10]" * "100"))
             . (#lpq 0.2)
         )
