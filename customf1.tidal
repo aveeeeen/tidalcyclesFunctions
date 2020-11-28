@@ -40,3 +40,5 @@ let
     st a = struct a
     c a = crush a
     g a = gain a
+    dist a = distort a 
+    
