@@ -40,5 +40,5 @@ let
     st a = struct a
     c a = crush a
     g a = gain a
-    dist a = distort a 
-    
+    randpan = (#pan (choose [1, 0]))
+    dist a = distort a
