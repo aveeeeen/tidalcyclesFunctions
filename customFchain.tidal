@@ -4,33 +4,36 @@
 let 
     send2 =
         void
-        .roomunit ("[1 .. 9] /2 " * "0.1") 0.7 ("8 .. 1" * "0.1")
-        .delunit 0.2 (1/4) 0.4
+        .roomunit ("{1 1 1 7 1 7 1}%8 " * "0.1") 0.9 ("3" * "0.1")
+        -- .delunit ("{1 1 1 7 1 7 1}%8" * 0.1) (1/8) 0.4
+        .(#l "{1 1 0.2 1 0.7 1 0.3}")
+        -- .(#l 0.3)
     send =
         void
-        .roomunit 0.3 0.6 0.1
-        .delunit 0.2 (1/8) 0.2
+        .roomunit 0.1 0.6 0.9
+        .delunit 0 (1/8) 0.2
+        .(#l "{1 1 0.2 1 0.7 1 0.3}%2")
     func1 =  
         void
-        .fast (spd)
-        . every 8 (
+        .whenmod 4 0 (
             void
-            .(# crush "8 .. <8 1>")
-        )
-        . chop 2
-        -- . (#shape 0.8)
-        . (# triode "[0.3 .. 0.7]/2")
-        .whenmod 4 3 (
-            void
-            -- . autopan
+            .stut' 2 (2/16) (
+                plyWith ("<2>") (
+                    (# speed ("1" * "-1 1 1 2 1 1 -1.5 -1"))
+                    .(|* gain 0.9)
+                )
+                -- .(|* l 0.8)
+            )
         )
     func2 = 
         void
-        .stut' 2 (2/16) (
+        .stut' 2 ("[2]/16") (
             void
-            .jux ("0.125 <2 0.5>" ~>)
-            .(#speed (choose [-0.5 , 0.5] |*| "1*4"))
-            .(# cut 22)
+            .jux ("0.25 <2 0.5>" ~> )
+            .(|* speed (choose [-1 , 0.5] |*| "1 .. 2 "))
+            -- .(|* gain ("0.1" * "9"))
+            .(|* l 0.8)
+            -- .(# cut 2)
         )
         -- .(# release "[1 .. 0.3]/2")
     func3 =
