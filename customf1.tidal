@@ -4,7 +4,7 @@ let
     autonotes e f = (range e f rand)
     cl channel cycles = (clutchIn channel cycles)
     fd channel cycles = (xfadeIn channel cycles)
-    nt = note
+    nt a = note a
     rtmvar = choose [2,4,8,16]
     mov1 = choose [0,7,5,-3]
     mov2 = "[12]"    
@@ -29,6 +29,7 @@ let
     autopan = (#pan (autos 0 1))
     kill = (#gain 0)
     l a = legato a
+    r a = release a
     la a = loopAt a
     big a b =
         void

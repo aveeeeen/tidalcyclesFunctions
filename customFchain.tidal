@@ -4,8 +4,8 @@
 let 
     send2 =
         void
-        .roomunit ("[1 .. 9] /2 " * "0.1") 0.7 ("8 .. 1" * "0.1")
-        .delunit 0.2 (1/4) 0.4
+        .roomunit ("[1 .. 8] /1 " * "0.1") 0.4 ("0.4")
+        .delunit 0.5 (3/4) ("1 .. 8" * "0.1") 
     send =
         void
         .roomunit 0.3 0.6 0.1
@@ -26,16 +26,16 @@ let
         )
     func2 = 
         void
-        .stut' 2 (2/16) (
+        .stut' 2 (4/16) (
             void
             .jux ("0.125 <2 0.5>" ~>)
             .(#speed (choose [-0.5 , 0.5] |*| "1*4"))
-            .(# cut 22)
+            .(# cut 44)
         )
         -- .(# release "[1 .. 0.3]/2")
     func3 =
         void
-        .(#crush "8 .. 3")
+        .(#crush "4 ")
     masterPitch =
         (|+| nt "-5").
         (|+| nt "[0 [~ 12] 7 0]*2").
