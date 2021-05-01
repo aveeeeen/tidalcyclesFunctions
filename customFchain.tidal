@@ -4,52 +4,93 @@
 let 
     send2 =
         void
-        .roomunit ("[1 .. 8] /1 " * "0.1") 0.4 ("0.4")
-        .delunit 0.5 (3/4) ("1 .. 8" * "0.1") 
+        .roomunit ("{1 1 1 7 1 7 1}%8 " * "0.1") 0.9 ("3" * "0.1")
+        -- .delunit ("{1 1 1 7 1 7 1}%8" * 0.1) (1/8) 0.4
+        .(#l "{1 1 0.2 1 0.7 1 0.3}")
+        -- .(#l 0.3)
     send =
         void
-        .roomunit 0.3 0.6 0.1
-        .delunit 0.2 (1/8) 0.2
+        .roomunit 0.1 0.6 0.9
+        .delunit 0 (1/8) 0.2
+        -- .(#l "{1 1 0.2 1 0.7 1 0.3}%2")
     func1 =  
         void
-        .fast (spd)
-        . every 8 (
+        .whenmod 4 0 (
             void
-            .(# crush "8 .. <8 1>")
-        )
-        . chop 2
-        -- . (#shape 0.8)
-        . (# triode "[0.3 .. 0.7]/2")
-        .whenmod 4 3 (
-            void
-            -- . autopan
+            .stut' 2 (4/16) (
+                    (# speed ("1" * "-1 1 1 2 1 1 -1.5 -1"))
+                    .(|* gain 0.9)
+                -- .(|* l 0.8)
+            )
         )
     func2 = 
         void
-        .stut' 2 (4/16) (
+        .stut' 2 ("[2]/16") (
             void
-            .jux ("0.125 <2 0.5>" ~>)
-            .(#speed (choose [-0.5 , 0.5] |*| "1*4"))
-            .(# cut 44)
+            .jux ("0.25 <2 0.5>" ~> )
+            .(|* speed (choose [-1 , 0.5] |*| "1 .. 2 "))
+            -- .(|* gain ("0.1" * "9"))
+            .(|* l 1)
+            -- .(# cut 2)
         )
         -- .(# release "[1 .. 0.3]/2")
     func3 =
         void
-        .(#crush "4 ")
+        .(#crush "8 .. 2")
     masterPitch =
         (|+| nt "-5").
         (|+| nt "[0 [~ 12] 7 0]*2").
         slow 4.
         (|+| nt "<5 9 7 5>")
-    filter ftype fq rt= 
+    fq' x
+        | x > 80 = 80
+        | otherwise = x
+    fq :: Pattern Double -> Pattern Double
+    fq i = (\x -> fq' x) <$> i
+    filter ftype a rt =
         if ftype == "lpf"
             then (
-                (#lpf ("[10 .. 1] * 1" * "[10 .. 1] * 1" * "[10 .. 1]" * fq * rt))
+                (#lpf ("[10 .. 1] * 1" * "[10 .. 1] * 1" * "[10 .. 1]" * (fq a) * rt))
                 . (#lpq 0.2)
                 . (#l 0.95)
             )     
             else (
-                (#hpf ("[1 .. 10] * 1" * "[1 .. 10] * 1" * "[1 .. 10]" * fq * rt))
+                (#hpf ("[1 .. 10] * 1" * "[1 .. 10] * 1" * "[1 .. 10]" * (fq a) * rt))
                 . (#hpq 0.2)
                 . (#l 0.95)
             )
+    
+
+{--
+
+let 
+    -- fq :: Pattern Double-> Pattern Double
+    fq' x
+        | x > 100 = 100
+        | otherwise = x
+    --filter ftype a rt =
+    --filter :: Pattern Double -> Pattern Double -> Pattern Double -> ControlPattern   
+    fq:: Pattern Double -> Pattern Double
+    fq i = (\x -> fq x) <$> i
+--}
+
+
+hush
+
+
+d1 
+    $ every (2) (
+        jux (fast (sine+(saw*2)))
+    )
+    $ filter "lpf" 40"2/16" 
+    $   stack[fast 2 $ "bd ~ [~ bd] bd","[~ oc]*4","msg*8"] 
+    # gain (tri*2+saw*4)*0.9 
+    # speed "<[1 .. 4] [1 .. 4]*-1>"
+
+
+
+fq 23
+
+fq 1000
+
+:t l
