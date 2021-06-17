@@ -43,4 +43,3 @@ let
     g a = gain a
     randpan = (#pan (choose [1, 0]))
     dist a = distort a
-    r a = release a
