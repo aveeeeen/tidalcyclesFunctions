@@ -1,0 +1,9 @@
+let fx = (
+            id
+            -- . timeLoop 0.25
+            -- . (while "0 0 1 1 0 1 0 0" (# waveloss 50))
+            -- . (\x -> x # lpf (rangex 12000 100 $ saw) # lpq 0.2)
+            -- . (# crush (range 8 3 $ slow 2 saw))
+            . whenmod 8 7 (\x -> x # hpf (rangex 100 2000 $ isaw) # hpq 0.2)
+            -- . (# release 0.1)
+        ) 
