@@ -1,9 +1,11 @@
 let fx = (
             id
-            -- . timeLoop 0.25
+            -- . timeLoop 0.5
             -- . (while "0 0 1 1 0 1 0 0" (# waveloss 50))
-            -- . (\x -> x # lpf (rangex 12000 100 $ saw) # lpq 0.2)
-            -- . (# crush (range 8 3 $ slow 2 saw))
+            -- . (\x -> x # lpf (rangex 12000 400 $ saw) # lpq 0.2)
+            -- . (# crush (range 12 3 $ slow 2 saw))
             . whenmod 8 7 (\x -> x # hpf (rangex 100 2000 $ isaw) # hpq 0.2)
             -- . (# release 0.1)
         ) 
+    glitch = (\x -> x |+ delay 0.5 |+ delaytime (density "<0.3 1.75 0.5 2>" (range 1.0e-4 0.05 $ saw)) |+ delayfeedback "{0 0 0.9 0 0.8 0 0.1}%12")
+    cunit patt = (while patt $ \x -> x # comb 1 # comblen 2 # combrate (choose [0.1, 0.05]))
