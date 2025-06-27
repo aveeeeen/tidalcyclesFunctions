@@ -9,3 +9,5 @@ let fx = (
         ) 
     glitch = (\x -> x |+ delay 0.5 |+ delaytime (density "<0.3 1.75 0.5 2>" (range 1.0e-4 0.05 $ saw)) |+ delayfeedback "{0 0 0.9 0 0.8 0 0.1}%12")
     cunit patt = (while patt $ \x -> x # comb 1 # comblen 2 # combrate (choose [0.1, 0.05]))
+    autopan = pan (range 1 0 $ slow 3 rand)
+    defaultE = stretch 1 # cmap 0
